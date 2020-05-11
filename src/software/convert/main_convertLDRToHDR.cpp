@@ -355,8 +355,8 @@ int main(int argc, char * argv[])
     Eigen::Vector3d axis = aa.axis();
     double angle = aa.angle();
 
-    if (axis(1) < -0.99) {
-      axis(1) = 1.0;
+    if (axis(2) < -0.99) {
+      axis(2) = 1.0;
       angle = -angle;
     }
 
@@ -387,7 +387,7 @@ int main(int argc, char * argv[])
         oiio::ImageBuf bufOutput(oiio::ImageSpec(output.Width(), output.Height(), 3, oiio::TypeDesc::FLOAT), output.data());
         oiio::ImageBufAlgo::rotate90(bufOutput, bufInput);
       }
-      else if (std::abs(angle - M_PI) < 1e-4) {
+      else if (std::abs(std::abs(angle) - M_PI) < 1e-4) {
         validTransform = true;
         output.resize(originalImage.Width(), originalImage.Height());
         oiio::ImageBuf bufOutput(oiio::ImageSpec(output.Width(), output.Height(), 3, oiio::TypeDesc::FLOAT), output.data());
