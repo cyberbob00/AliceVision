@@ -187,6 +187,10 @@ void LaguerreBACalibration::process(const std::vector<std::vector<std::string>>&
     ceres::Problem problem;
     ceres::LossFunction* lossFunction = nullptr;
 
+    for(auto& param : exposureParameters) {
+        problem.AddParameterBlock(&param.second, 1);
+    }
+
     // Convert selected samples into residual blocks
     for(int groupId = 0; groupId < samples.size(); ++groupId)
     {
@@ -216,6 +220,7 @@ void LaguerreBACalibration::process(const std::vector<std::vector<std::string>>&
     {
         for(auto& param : exposureParameters)
         {
+            problem.AddParameterBlock(&param.second, 1);
             problem.SetParameterBlockConstant(&param.second);
         }
     }
